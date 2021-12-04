@@ -75,3 +75,38 @@ void SimulateKey( char key, KeyPressMode mode ){
 }
 
 //-----------------------------------------------------------
+
+unsigned long long GetRandomUnsigned(){
+
+    unsigned long long res;
+    _Bool success = CryptGenRandom( GL_CryptProv, sizeof(res), (BYTE*) &res );
+
+#ifdef DEBUGMODE
+    if( !success ){
+        printf("Failed to query source of entropy. Wincrypt error: %d\n", GetLastError() );
+    }
+#endif
+
+    return res;
+}
+
+//-----------------------------------------------------------
+
+double GetRandomDouble( double a, double b ){
+
+    double lo;
+    double hi;
+    if( a < b ){
+        lo = a;
+        hi = b;
+    }else{
+        lo = b;
+        hi = a;
+    }
+
+    double range = hi-lo;
+    double rng = (range * GetRandomUnsigned() )/((double)UnsignedMax);
+    return lo + rng;
+}
+
+//-----------------------------------------------------------
