@@ -110,3 +110,13 @@ double GetRandomDouble( double a, double b ){
 }
 
 //-----------------------------------------------------------
+
+void NanoSleep( double time ){
+
+    HANDLE tim = CreateTimerSimple();
+    SetTimerSimple( tim, time );
+    WaitTimerSimple(tim);
+    CloseHandle(tim);
+}
+
+//-----------------------------------------------------------

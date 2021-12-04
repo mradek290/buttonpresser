@@ -60,10 +60,31 @@ void Initialize(){
 
 }
 
+void MainLoop(){
+
+    unsigned sequence_pos = 0;
+
+    while(1){
+
+        double cycletime = GL_Cycle + GetRandomDouble(-GL_CycleVariance,GL_CycleVariance);
+        NanoSleep(cycletime);
+
+        char key = GL_Sequence[sequence_pos];
+        sequence_pos = (sequence_pos+1) % GL_SequnceLength;
+        SimulateKey( key, KeyDown );
+
+        NanoSleep( GL_HoldTime );
+        SimulateKey( key, KeyUp );
+    }
+
+}
+
 int main( int argc, const char* argv[] ){
 
     Initialize();
     LoadConfiguration("config.ini");
+
+    MainLoop();
 
 
     return 0;
