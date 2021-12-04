@@ -1,29 +1,4 @@
 
-#define DEBUGMODE
-
-#ifdef DEBUGMODE
-#include <stdio.h>
-#endif
-
-#include <stdlib.h>
-#include <string.h>
-
-#include <windows.h>
-#include "globals.c"
-#include "auxil.c"
-
-void Initialize(){
-
-    _Bool success;
-
-    success = QueryPerformanceFrequency( &GL_PerformanceFrequency );
-#ifdef DEBUGMODE
-    if( !success ){
-        printf("Unable to query performance counter: %d\n", GetLastError() );
-    }
-#endif
-}
-
 unsigned ReadConfigItemAsString( const char* itemname, const char* buf, char* itembuf, unsigned itembuf_sz ){
     
     if( !itemname || !(*itemname) || !buf || !itembuf || !itembuf_sz )
@@ -153,15 +128,4 @@ void LoadConfiguration( const char* fname ){
 #endif
 
     CloseHandle(file);
-}
-
-
-
-int main( int argc, const char* argv[] ){
-
-    Initialize();
-
-    LoadConfiguration("config.ini");
-
-    return 0;
 }
